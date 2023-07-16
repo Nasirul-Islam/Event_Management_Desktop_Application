@@ -1,0 +1,28 @@
+
+Project Name: Event Management System.
+
+Perpous: Develop a system for organizing and managing events, allowing users to create new events, view event details, update event information, and cancel or delete events.
+
+Admin:
+1. Admin can Approve new event.
+
+2. Admin can Upgrate event.
+
+3. Admin can Repeal an event.
+
+User's:
+
+1. User can Create New Event.
+Event name, 
+Event location, 
+Event Date, 
+Event Budget
+
+2. User can See all event.
+
+The project proposal must contain
+Introduction
+Project Background
+Methodology
+Feasibility study
+Limitation and Conclusion
