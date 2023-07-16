@@ -68,6 +68,7 @@ class Event:
         Detailsframe.place(x=0, y=500, width=1366, height=203)
 
         # ========================== Data Frame Left =============================
+        
         # Event Type
         lblNameTablet = Label(DataframeLeft, text="Event Type", font=("roboto", 12, "bold"), 
                               padx=2, pady=6)
@@ -79,131 +80,132 @@ class Event:
         comNametablet.grid(row=0, column=1)
         
         # Event Name
-        lblref = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Event Name", padx=2)
-        lblref.grid(row=1, column=0, sticky=W)
+        lblEventName = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Event Name", padx=2)
+        lblEventName.grid(row=1, column=0, sticky=W)
 
-        txtref = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.ref, width=35)
-        txtref.grid(row=1, column=1)
+        txtEventName = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+                             textvariable=self.ref, width=35)
+        txtEventName.grid(row=1, column=1)
 
         # Amount
-        lblDose = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Amount", padx=2, pady=4)
-        lblDose.grid(row=2, column=0, sticky=W)
+        lblAmount = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Amount", padx=2, pady=4)
+        lblAmount.grid(row=2, column=0, sticky=W)
 
-        txtDose = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Dose, width=35)
-        txtDose.grid(row=2, column=1)
+        txtAmount = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+                          textvariable=self.Dose, width=35)
+        txtAmount.grid(row=2, column=1)
 
         # Seats
-        lblNoOfTablets = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Seats", 
+        lblSeats = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Seats", 
                                padx=2, pady=6)
-        lblNoOfTablets.grid(row=3, column=0, sticky=W)
+        lblSeats.grid(row=3, column=0, sticky=W)
 
-        txtNoOfTablets = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+        txtSeats = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
                                textvariable=self.NumberofTablets, width=35)
-        txtNoOfTablets.grid(row=3, column=1)
+        txtSeats.grid(row=3, column=1)
         
         # Menu
-        lblLot = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Menu", padx=2, pady=6)
-        lblLot.grid(row=4, column=0, sticky=W)
+        lblMenu = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Menu", padx=2, pady=6)
+        lblMenu.grid(row=4, column=0, sticky=W)
 
-        txtLot = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Lot, width=35)
-        txtLot.grid(row=4, column=1)
+        txtMenu = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Lot, width=35)
+        txtMenu.grid(row=4, column=1)
 
         # Date
-        lblIssueDate = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Date", padx=2, pady=6)
-        lblIssueDate.grid(row=5, column=0, sticky=W)
-        txtIssueDate = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Issuedate, width=35)
-        txtIssueDate.grid(row=5, column=1)
+        lblDate = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Date", padx=2, pady=6)
+        lblDate.grid(row=5, column=0, sticky=W)
+        
+        txtDate = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+                        textvariable=self.Issuedate, width=35)
+        txtDate.grid(row=5, column=1)
 
         # Time
-        lblIssueDate = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Time", padx=2, pady=6)
-        lblIssueDate.grid(row=6, column=0, sticky=W)
+        lblTime = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Time", padx=2, pady=6)
+        lblTime.grid(row=6, column=0, sticky=W)
 
-        txtIssueDate = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+        txtTime = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
                              textvariable=self.Issuedate, width=35)
-        txtIssueDate.grid(row=6, column=1)
+        txtTime.grid(row=6, column=1)
 
         # ============================== Data Frame Right =======================================
 
         # User Name
-        lblref = Label(DataframeRight, font=("roboto", 12, "bold"), text="Your Name", padx=2)
-        lblref.grid(row=1, column=0, sticky=W)
+        lblUserName = Label(DataframeRight, font=("roboto", 12, "bold"), text="Your Name", padx=2)
+        lblUserName.grid(row=1, column=0, sticky=W)
 
-        txtref = Entry(DataframeRight, font=("roboto", 12, "bold"), textvariable=self.ref, width=35)
-        txtref.grid(row=1, column=1)
+        txtUserName = Entry(DataframeRight, font=("roboto", 12, "bold"), 
+                            textvariable=self.ref, width=35)
+        txtUserName.grid(row=1, column=1)
 
         # Email
-        lblDose = Label(DataframeRight, font=("roboto", 12, "bold"), text="Email", padx=2, pady=4)
-        lblDose.grid(row=2, column=0, sticky=W)
+        lblEmail = Label(DataframeRight, font=("roboto", 12, "bold"), text="Email", padx=2, pady=4)
+        lblEmail.grid(row=2, column=0, sticky=W)
 
-        txtDose = Entry(DataframeRight, font=("roboto", 12, "bold"), 
+        txtEmail = Entry(DataframeRight, font=("roboto", 12, "bold"), 
                         textvariable=self.Dose, width=35)
-        txtDose.grid(row=2, column=1)
+        txtEmail.grid(row=2, column=1)
 
         # Phone
-        lblNoOfTablets = Label(DataframeRight, font=("roboto", 12, "bold"), text="Phone", 
+        lblPhone = Label(DataframeRight, font=("roboto", 12, "bold"), text="Phone", 
                                padx=2, pady=6)
-        lblNoOfTablets.grid(row=3, column=0, sticky=W)
+        lblPhone.grid(row=3, column=0, sticky=W)
 
-        txtNoOfTablets = Entry(DataframeRight, font=("roboto", 12, "bold"), 
+        txtPhone = Entry(DataframeRight, font=("roboto", 12, "bold"), 
                                textvariable=self.NumberofTablets, width=35)
-        txtNoOfTablets.grid(row=3, column=1)
+        txtPhone.grid(row=3, column=1)
         
         # Address
-        lblLot = Label(DataframeRight, font=("roboto", 12, "bold"), text="Address", padx=2, pady=6)
-        lblLot.grid(row=4, column=0, sticky=W)
+        lblAddress = Label(DataframeRight, font=("roboto", 12, "bold"), text="Address", 
+                           padx=2, pady=6)
+        lblAddress.grid(row=4, column=0, sticky=W)
 
-        txtLot = Entry(DataframeRight, font=("roboto", 12, "bold"), textvariable=self.Lot, width=35)
-        txtLot.grid(row=4, column=1)
+        txtAddress = Entry(DataframeRight, font=("roboto", 12, "bold"), 
+                           textvariable=self.Lot, width=35)
+        txtAddress.grid(row=4, column=1)
 
         # Payment Mathod
-        lblIssueDate = Label(DataframeRight, font=("roboto", 12, "bold"), text="Payment Mathod", 
+        lblPaymentMathod = Label(DataframeRight, font=("roboto", 12, "bold"), text="Payment Mathod", 
                              padx=2, pady=6)
-        lblIssueDate.grid(row=5, column=0, sticky=W)
-        txtIssueDate = Entry(DataframeRight, font=("roboto", 12, "bold"), 
+        lblPaymentMathod.grid(row=5, column=0, sticky=W)
+        txtPaymentMathod = Entry(DataframeRight, font=("roboto", 12, "bold"), 
                              textvariable=self.Issuedate, width=35)
-        txtIssueDate.grid(row=5, column=1)
+        txtPaymentMathod.grid(row=5, column=1)
 
         # Transaction ID
-        lblIssueDate = Label(DataframeRight, font=("roboto", 12, "bold"), text="Transaction ID", 
+        lblTransactionID = Label(DataframeRight, font=("roboto", 12, "bold"), text="Transaction ID", 
                              padx=2, pady=6)
-        lblIssueDate.grid(row=6, column=0, sticky=W)
+        lblTransactionID.grid(row=6, column=0, sticky=W)
 
-        txtIssueDate = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
+        txtTransactionID = Entry(DataframeRight, font=("roboto", 12, "bold"), 
                              textvariable=self.Issuedate, width=35)
-        txtIssueDate.grid(row=6, column=1)
+        txtTransactionID.grid(row=6, column=1)
 
         # ============================== Button =================================================
+
+        btnPrescriptionData = Button(Buttonframe, command=self.iPrescriptionData, 
+                                     text="Save Information", bg="green", fg="white",
+                                     font=("roboto", 12, "bold"), padx=80, pady=5)
+        btnPrescriptionData.grid(row=0, column=0)
+
+        btnUpdate = Button(Buttonframe, command=self.update_data, text="Update", bg="green", 
+                           fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
+        btnUpdate.grid(row=0, column=1)
+
+        btnDelete = Button(Buttonframe, command=self.idelete,text="Delete", bg="green", 
+                           fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
+        btnDelete.grid(row=0, column=2)
+
+        btnClear = Button(Buttonframe, text="Clear", bg="green", fg="white", 
+                          font=("roboto", 12, "bold"), padx=100, pady=5)
+        btnClear.grid(row=0, column=3)
+
+        btnExit = Button(Buttonframe, text="Exit", bg="green", fg="white", 
+                         font=("roboto", 12, "bold"), padx=120, pady=5)
+        btnExit.grid(row=0, column=4)
+
+        # =================================== Table ==============================
         
-        btnPrescription = Button(Buttonframe, command=self.iprescription, text="Description", bg="green", fg="white", font=("roboto", 12, "bold"),
-                                 padx=70, pady=6)
-        btnPrescription.grid(row=0, column=0)
-
-        btnPrescriptionData = Button(Buttonframe, command=self.iPrescriptionData, text="Save Information", bg="green",
-                                     fg="white",
-                                     font=("roboto", 12, "bold"), padx=50, pady=6)
-        btnPrescriptionData.grid(row=0, column=1)
-
-        btnUpdate = Button(Buttonframe, command=self.update_data, text="Update", bg="green", fg="white", font=("roboto", 12, "bold"), padx=95,
-                           pady=6)
-        btnUpdate.grid(row=0, column=2)
-
-        btnDelete = Button(Buttonframe, command=self.idelete,text="Delete", bg="green", fg="white", font=("roboto", 12, "bold"), padx=95,
-                           pady=6)
-        btnDelete.grid(row=0, column=3)
-
-        btnClear = Button(Buttonframe, text="Clear", bg="green", fg="white", font=("roboto", 12, "bold"), padx=100,
-                          pady=6)
-        btnClear.grid(row=0, column=4)
-
-        btnExit = Button(Buttonframe, text="Exit", bg="green", fg="white", font=("roboto", 12, "bold"), padx=100,
-                         pady=6)
-        btnExit.grid(row=0, column=5)
-
-        # ===================================
-        # Table =============================
-        # =================================== 
-        # Scroll lBar 
-        # ===================================
+        # ============================ Scroll Bar ===========================
 
         scroll_x = ttk.Scrollbar(Detailsframe, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(Detailsframe, orient=VERTICAL)
