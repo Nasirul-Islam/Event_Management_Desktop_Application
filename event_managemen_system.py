@@ -4,12 +4,11 @@ import random
 import time
 import datetime
 from tkinter import messagebox
-# import mysql.connector
-
+import mysql.connector
 
 class Event:
     def __init__(self, root):
-        # self.iPrescriptionData()
+        # self.SaveInformation()
         self.root = root
         self.root.title("Event Management Application")
         self.root.geometry("1360x760+0+0")
@@ -17,24 +16,20 @@ class Event:
         icon = PhotoImage(file = "logo2.png")
         self.root.iconphoto(True, icon) 
 
-        self.Nameoftablets = StringVar()
-        self.ref = StringVar()
-        self.Dose = StringVar()
-        self.NumberofTablets = StringVar()
-        self.Lot = StringVar()
-        self.Issuedate = StringVar()
-        self.ExpDate = StringVar()
-        self.DailyDose = StringVar()
-        self.sideEffect = StringVar()
-        self.FurtherInformation = StringVar()
-        self.StorageAdvice = StringVar()
-        self.DrivingUsingMachine = StringVar()
-        self.HowToUseMedication = StringVar()
-        self.PatentId = StringVar()
-        self.nhsNumber = StringVar()
-        self.PatientName = StringVar()
-        self.DateOfBirth = StringVar()
-        self.PatientAddress = StringVar()
+        self.EventType = StringVar()
+        self.EventName = StringVar()
+        self.Amount = IntVar()
+        self.Seats = IntVar()
+        self.Menu = StringVar()
+        self.Date = StringVar()
+        self.Time = StringVar()
+
+        self.UserName = StringVar()
+        self.Email = StringVar()
+        self.Phone = IntVar()
+        self.Address = StringVar()
+        self.PaymentMathod = StringVar()
+        self.TransactionID = IntVar()
 
         # ============================== TITLE FRAME =============================
 
@@ -70,21 +65,21 @@ class Event:
         # ========================== Data Frame Left =============================
         
         # Event Type
-        lblNameTablet = Label(DataframeLeft, text="Event Type", font=("roboto", 12, "bold"), 
+        lblEventType = Label(DataframeLeft, text="Event Type", font=("roboto", 12, "bold"), 
                               padx=2, pady=6)
-        lblNameTablet.grid(row=0, column=0)
+        lblEventType.grid(row=0, column=0)
 
-        comNametablet = ttk.Combobox(DataframeLeft, textvariable=self.Nameoftablets, state="readonly", font=("roboto", 12, "bold"), width=33)
-        comNametablet["values"] = ("Office Party", "Wedding", "Seminar", "Concert", "Birthday")
-        # comNametablet.current(0)
-        comNametablet.grid(row=0, column=1)
+        comEventType = ttk.Combobox(DataframeLeft, textvariable=self.EventType, state="readonly", font=("roboto", 12, "bold"), width=33)
+        comEventType["values"] = ("Office Party", "Wedding", "Seminar", "Concert", "Birthday")
+        # comEventType.current(0)
+        comEventType.grid(row=0, column=1)
         
         # Event Name
         lblEventName = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Event Name", padx=2)
         lblEventName.grid(row=1, column=0, sticky=W)
 
         txtEventName = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
-                             textvariable=self.ref, width=35)
+                             textvariable=self.EventName, width=35)
         txtEventName.grid(row=1, column=1)
 
         # Amount
@@ -92,7 +87,7 @@ class Event:
         lblAmount.grid(row=2, column=0, sticky=W)
 
         txtAmount = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
-                          textvariable=self.Dose, width=35)
+                          textvariable=self.Amount, width=35)
         txtAmount.grid(row=2, column=1)
 
         # Seats
@@ -101,14 +96,14 @@ class Event:
         lblSeats.grid(row=3, column=0, sticky=W)
 
         txtSeats = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
-                               textvariable=self.NumberofTablets, width=35)
+                               textvariable=self.Seats, width=35)
         txtSeats.grid(row=3, column=1)
         
         # Menu
         lblMenu = Label(DataframeLeft, font=("roboto", 12, "bold"), text="Menu", padx=2, pady=6)
         lblMenu.grid(row=4, column=0, sticky=W)
 
-        txtMenu = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Lot, width=35)
+        txtMenu = Entry(DataframeLeft, font=("roboto", 12, "bold"), textvariable=self.Menu, width=35)
         txtMenu.grid(row=4, column=1)
 
         # Date
@@ -116,7 +111,7 @@ class Event:
         lblDate.grid(row=5, column=0, sticky=W)
         
         txtDate = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
-                        textvariable=self.Issuedate, width=35)
+                        textvariable=self.Date, width=35)
         txtDate.grid(row=5, column=1)
 
         # Time
@@ -124,7 +119,7 @@ class Event:
         lblTime.grid(row=6, column=0, sticky=W)
 
         txtTime = Entry(DataframeLeft, font=("roboto", 12, "bold"), 
-                             textvariable=self.Issuedate, width=35)
+                             textvariable=self.Time, width=35)
         txtTime.grid(row=6, column=1)
 
         # ============================== Data Frame Right =======================================
@@ -134,7 +129,7 @@ class Event:
         lblUserName.grid(row=1, column=0, sticky=W)
 
         txtUserName = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                            textvariable=self.ref, width=35)
+                            textvariable=self.UserName, width=35)
         txtUserName.grid(row=1, column=1)
 
         # Email
@@ -142,7 +137,7 @@ class Event:
         lblEmail.grid(row=2, column=0, sticky=W)
 
         txtEmail = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                        textvariable=self.Dose, width=35)
+                        textvariable=self.Email, width=35)
         txtEmail.grid(row=2, column=1)
 
         # Phone
@@ -151,7 +146,7 @@ class Event:
         lblPhone.grid(row=3, column=0, sticky=W)
 
         txtPhone = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                               textvariable=self.NumberofTablets, width=35)
+                               textvariable=self.Phone, width=35)
         txtPhone.grid(row=3, column=1)
         
         # Address
@@ -160,7 +155,7 @@ class Event:
         lblAddress.grid(row=4, column=0, sticky=W)
 
         txtAddress = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                           textvariable=self.Lot, width=35)
+                           textvariable=self.Address, width=35)
         txtAddress.grid(row=4, column=1)
 
         # Payment Mathod
@@ -168,7 +163,7 @@ class Event:
                              padx=2, pady=6)
         lblPaymentMathod.grid(row=5, column=0, sticky=W)
         txtPaymentMathod = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                             textvariable=self.Issuedate, width=35)
+                             textvariable=self.PaymentMathod, width=35)
         txtPaymentMathod.grid(row=5, column=1)
 
         # Transaction ID
@@ -177,21 +172,22 @@ class Event:
         lblTransactionID.grid(row=6, column=0, sticky=W)
 
         txtTransactionID = Entry(DataframeRight, font=("roboto", 12, "bold"), 
-                             textvariable=self.Issuedate, width=35)
+                             textvariable=self.TransactionID, width=35)
         txtTransactionID.grid(row=6, column=1)
 
         # ============================== Button =================================================
 
-        btnPrescriptionData = Button(Buttonframe, command=self.iPrescriptionData, 
-                                     text="Save Information", bg="green", fg="white",
+        btnSaveInformation = Button(Buttonframe, command=self.save_info, text="Save Information", bg="green", fg="white",
                                      font=("roboto", 12, "bold"), padx=80, pady=5)
-        btnPrescriptionData.grid(row=0, column=0)
+        btnSaveInformation.grid(row=0, column=0)
 
-        btnUpdate = Button(Buttonframe, command=self.update_data, text="Update", bg="green", 
+        #  command=self.update_data,
+        btnUpdate = Button(Buttonframe, text="Update", bg="green", 
                            fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
         btnUpdate.grid(row=0, column=1)
 
-        btnDelete = Button(Buttonframe, command=self.idelete,text="Delete", bg="green", 
+        #  command=self.delete_info,
+        btnDelete = Button(Buttonframe, text="Delete", bg="green", 
                            fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
         btnDelete.grid(row=0, column=2)
 
@@ -209,104 +205,106 @@ class Event:
 
         scroll_x = ttk.Scrollbar(Detailsframe, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(Detailsframe, orient=VERTICAL)
-        self.hospital_table = ttk.Treeview(Detailsframe,
-                                           column=("nameoftablets", "ref", "dose", "nooftablets", "lot", "issuedate",
-                                                   "expdate", "dailydose", "storage", "nhsnumber", "pname", "dob",
-                                                   "address"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        self.event_table = ttk.Treeview(Detailsframe,
+                                        column=("EventType", "EventName", "Amount", "Seats", "Menu", 
+                                                "Date", "Time", "UserName", "Email", "Phone", "Address", 
+                                                "PaymentMathod", "TransactionID"), 
+                                        xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
 
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
 
-        scroll_x = ttk.Scrollbar(command=self.hospital_table.xview)
-        scroll_y = ttk.Scrollbar(command=self.hospital_table.yview)
+        scroll_x = ttk.Scrollbar(command=self.event_table.xview)
+        scroll_y = ttk.Scrollbar(command=self.event_table.yview)
 
-        self.hospital_table.heading("nameoftablets", text="Name Of Tablets")
-        self.hospital_table.heading("ref", text="Reference No.")
-        self.hospital_table.heading("dose", text="Dose")
-        self.hospital_table.heading("nooftablets", text="No of Tablets")
-        self.hospital_table.heading("lot", text="Lot")
-        self.hospital_table.heading("issuedate", text="Issue Date")
-        self.hospital_table.heading("expdate", text="Exp Date")
-        self.hospital_table.heading("dailydose", text="Daily Dose")
-        self.hospital_table.heading("storage", text="Storage")
-        self.hospital_table.heading("nhsnumber", text="NHS Number")
-        self.hospital_table.heading("pname", text="Patient Name")
-        self.hospital_table.heading("dob", text="Date of Birth")
-        self.hospital_table.heading("address", text="Address")
+        self.event_table.heading("EventType", text="Event Type")
+        self.event_table.heading("EventName", text="Event Name")
+        self.event_table.heading("Amount", text="Amount")
+        self.event_table.heading("Seats", text="Seats")
+        self.event_table.heading("Menu", text="Menu")
+        self.event_table.heading("Date", text="Date")
+        self.event_table.heading("Time", text="Time")
+        self.event_table.heading("UserName", text="User Name")
+        self.event_table.heading("Email", text="Email")
+        self.event_table.heading("Phone", text="Phone")
+        self.event_table.heading("Address", text="Address")
+        self.event_table.heading("PaymentMathod", text="Payment Mathod")
+        self.event_table.heading("TransactionID", text="Transaction ID")
 
-        self.hospital_table["show"] = "headings"
+        self.event_table["show"] = "headings"
 
-        self.hospital_table.column("nameoftablets", width=100)
-        self.hospital_table.column("ref", width=100)
-        self.hospital_table.column("dose", width=100)
-        self.hospital_table.column("nooftablets", width=100)
-        self.hospital_table.column("lot", width=100)
-        self.hospital_table.column("issuedate", width=100)
-        self.hospital_table.column("expdate", width=100)
-        self.hospital_table.column("dailydose", width=100)
-        self.hospital_table.column("storage", width=100)
-        self.hospital_table.column("nhsnumber", width=100)
-        self.hospital_table.column("pname", width=100)
-        self.hospital_table.column("dob", width=100)
-        self.hospital_table.column("address", width=100)
+        self.event_table.column("EventType", width=100)
+        self.event_table.column("EventName", width=100)
+        self.event_table.column("Amount", width=100)
+        self.event_table.column("Seats", width=100)
+        self.event_table.column("Menu", width=100)
+        self.event_table.column("Date", width=100)
+        self.event_table.column("Time", width=100)
+        self.event_table.column("UserName", width=100)
+        self.event_table.column("Email", width=100)
+        self.event_table.column("Phone", width=100)
+        self.event_table.column("Address", width=100)
+        self.event_table.column("PaymentMathod", width=100)
+        self.event_table.column("TransactionID", width=100)
 
-        self.hospital_table.pack(fill=BOTH, expand=1)
+        self.event_table.pack(fill=BOTH, expand=1)
+
+
         # self.fatch_data()
-        self.hospital_table.bind("<ButtonRelease-1>",self.get_cursor)
+        # self.event_table.bind("<ButtonRelease-1>",self.get_cursor)
 
-        # ======================================= 
-        # Functinality Declaration 
-        # =======================================
-    #SAVE INFO BUTTON
+        # ==================================== Functinality Declaration ===================================
+    # ============= SAVE INFO BUTTON ==============
 
-    def iPrescriptionData(self):
-        if self.Nameoftablets.get() == "" or self.ref.get() == "":
+    def save_info(self):
+        if self.EventType.get() == "" or self.EventName.get() == "":
             messagebox.showerror("Error", "All fields are required")
         else:
             conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
                                            database="mydata")
             my_cursor = conn.cursor()
-            my_cursor.execute("INSERT INTO hospital values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (
-                self.Nameoftablets.get(),
-                self.ref.get(),
-                self.Dose.get(),
-                self.NumberofTablets.get(),
-                self.Lot.get(),
-                self.Issuedate.get(),
-                self.ExpDate.get(),
-                self.DailyDose.get(),
-                self.StorageAdvice.get(),
-                self.nhsNumber.get(),
-                self.PatientName.get(),
-                self.DateOfBirth.get(),
-                self.PatientAddress.get()
-
-            ))
+            my_cursor.execute("INSERT INTO hospital values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+                                (
+                                self.EventType.get(),
+                                self.EventName.get(),
+                                self.Amount.get(),
+                                self.Seats.get(),
+                                self.Menu.get(),
+                                self.Date.get(),
+                                self.Time.get(),
+                                self.UserName.get(),
+                                self.Email.get(),
+                                self.Phone.get(),
+                                self.Address.get(),
+                                self.PaymentMathod.get(),
+                                self.TransactionID.get()
+                                )
+                            )
 
             conn.commit()
             conn.close()
             self.fatch_data()
             messagebox.showinfo("Success", "Record Has been inserted")
-
+    """
     def update_data(self):
             conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
                                            database="mydata")
             my_cursor=conn.cursor()
-            my_cursor.execute("update hospital set nameoftablets=s%,dose=s%,nooftablets=s%,lot=%s,"
-                              "issuedate=s%,expdate=%s,dailydose=%s,storage=%s,nhsnumber=%s,pname=%s,dob=%s,address=%s where ref=s%",(
-                self.Nameoftablets.get(),
-                self.Dose.get(),
-                self.NumberofTablets.get(),
-                self.Lot.get(),
-                self.Issuedate.get(),
-                self.ExpDate.get(),
-                self.DailyDose.get(),
-                self.StorageAdvice.get(),
-                self.nhsNumber.get(),
-                self.PatientName.get(),
-                self.DateOfBirth.get(),
-                self.PatientAddress.get(),
-                self.ref.get()
+            my_cursor.execute("update hospital set EventType=s%,Amount=s%,nooftablets=s%,Menu=%s,"
+                              "Date=s%,Time=%s,UserName=%s,storage=%s,Phone=%s,pname=%s,dob=%s,address=%s where EventName=s%",(
+                self.EventType.get(),
+                self.Amount.get(),
+                self.Seats.get(),
+                self.Menu.get(),
+                self.Date.get(),
+                self.Time.get(),
+                self.UserName.get(),
+                self.Email.get(),
+                self.Phone.get(),
+                self.Address.get(),
+                self.PaymentMathod.get(),
+                self.TransactionID.get(),
+                self.EventName.get()
             ))
 
 
@@ -318,9 +316,9 @@ class Event:
             my_cursor.execute("Select * from hospital")
             rows = my_cursor.fetchall()
             if len(rows) != 0:
-                self.hospital_table.delete(*self.hospital_table.get_children())
+                self.event_table.delete(*self.event_table.get_children())
                 for i in rows:
-                    self.hospital_table.insert("", END, values=i)
+                    self.event_table.insert("", END, values=i)
 
                     conn.commit()
                     conn.close()
@@ -328,53 +326,53 @@ class Event:
 
 
     def get_cursor(self,event=""):
-        cursor_row=self.hospital_table.focus()
-        content=self.hospital_table.item(cursor_row)
+        cursor_row=self.event_table.focus()
+        content=self.event_table.item(cursor_row)
         row=content["values"]
-        self.Nameoftablets.set(row[0])
-        self.ref.set(row[1])
-        self.Dose.set(row[2])
-        self.NumberofTablets.set(row[3])
-        self.Lot.set(row[4])
-        self.Issuedate.set(row[5])
-        self.ExpDate.set(row[6])
-        self.DailyDose.set(row[7])
-        self.StorageAdvice.set(row[8])
-        self.nhsNumber.set(row[9])
-        self.PatientName.set(row[10])
-        self.DateOfBirth.set(row[11])
-        self.PatientAddress.set(row[12])
+        self.EventType.set(row[0])
+        self.EventName.set(row[1])
+        self.Amount.set(row[2])
+        self.Seats.set(row[3])
+        self.Menu.set(row[4])
+        self.Date.set(row[5])
+        self.Time.set(row[6])
+        self.UserName.set(row[7])
+        self.Email.set(row[8])
+        self.Phone.set(row[9])
+        self.Address.set(row[10])
+        self.PaymentMathod.set(row[11])
+        self.TransactionID.set(row[12])
 
 
     def iprescription(self):
-        self.txtPrecription.insert(END,"NAME of Tablets:\t\t\t"+self.Nameoftablets.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.ref.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Dose.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.NumberofTablets.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Lot.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Issuedate.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.ExpDate.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.DailyDose.get() + "\n")
+        self.txtPrecription.insert(END,"NAME of Tablets:\t\t\t"+self.EventType.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.EventName.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Amount.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Seats.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Menu.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Date.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Time.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.UserName.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.sideEffect.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.FurtherInformation.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.StorageAdvice.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Email.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.DrivingUsingMachine.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PatentId.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.nhsNumber.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PatientName.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.DateOfBirth.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PatientAddress.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Phone.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Address.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PaymentMathod.get() + "\n")
+        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.TransactionID.get() + "\n")
 
 
 
 
 
-    def idelete(self):
+    def delete_info(self):
         conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
                                        database="mydata")
         my_cursor=conn.cursor()
-        query="delete from hospital where ref=s%"
-        value=(self.ref.get(),)
+        query="delete from hospital where EventName=s%"
+        value=(self.EventName.get(),)
         my_cursor.execute(query,value)
 
         conn.commit()
@@ -382,7 +380,7 @@ class Event:
         self.fatch_data()
         messagebox.showinfo("Delete", "User has been deleted successfully")
 
-
+    """ 
 
 root = Tk()
 ob = Event(root)
