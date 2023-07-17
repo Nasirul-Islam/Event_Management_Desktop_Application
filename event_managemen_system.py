@@ -6,6 +6,8 @@ import datetime
 from tkinter import messagebox
 import mysql.connector
 
+
+
 class Event:
     def __init__(self, root):
         # self.SaveInformation()
@@ -248,22 +250,22 @@ class Event:
         self.event_table.column("TransactionID", width=100)
 
         self.event_table.pack(fill=BOTH, expand=1)
+        self.event_table.bind("<ButtonRelease-1>",self.get_cursor)
+        self.fatch_data()
 
 
-        # self.fatch_data()
-        # self.event_table.bind("<ButtonRelease-1>",self.get_cursor)
-
-        # ==================================== Functinality Declaration ===================================
+    # ==================================== Functinality Declaration ===================================
+    
     # ============= SAVE INFO BUTTON ==============
 
     def save_info(self):
-        if self.EventType.get() == "" or self.EventName.get() == "":
+        if self.EventName.get() == "" or self.UserName.get() == "":
             messagebox.showerror("Error", "All fields are required")
         else:
-            conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
-                                           database="mydata")
+            conn = mysql.connector.connect(host="localhost", username="root", password="password",
+                                           database="event_management_app")
             my_cursor = conn.cursor()
-            my_cursor.execute("INSERT INTO hospital values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+            my_cursor.execute("INSERT INTO all_events values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
                                 (
                                 self.EventType.get(),
                                 self.EventName.get(),
@@ -280,11 +282,46 @@ class Event:
                                 self.TransactionID.get()
                                 )
                             )
-
             conn.commit()
-            conn.close()
             self.fatch_data()
+            conn.close()
             messagebox.showinfo("Success", "Record Has been inserted")
+
+
+    def fatch_data(self):
+            conn = mysql.connector.connect(host="localhost", username="root", password="password",
+                                           database="event_management_app")
+            my_cursor = conn.cursor()
+            my_cursor.execute("Select * from all_events")
+            rows = my_cursor.fetchall()
+            if len(rows) != 0:
+                self.event_table.delete(*self.event_table.get_children())
+                for i in rows:
+                    self.event_table.insert("", END, values=i)
+                conn.commit()
+            conn.close()
+
+
+    def get_cursor(self, event=""):
+        cursor_row = self.event_table.focus()
+        content = self.event_table.item(cursor_row)
+        row = content["values"]
+        self.EventType.set(row[0])
+        self.EventName.set(row[1])
+        self.Amount.set(row[2])
+        self.Seats.set(row[3])
+        self.Menu.set(row[4])
+        self.Date.set(row[5])
+        self.Time.set(row[6])
+        self.UserName.set(row[7])
+        self.Email.set(row[8])
+        self.Phone.set(row[9])
+        self.Address.set(row[10])
+        self.PaymentMathod.set(row[11])
+        self.TransactionID.set(row[12])
+
+
+
     """
     def update_data(self):
             conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
@@ -306,44 +343,9 @@ class Event:
                 self.TransactionID.get(),
                 self.EventName.get()
             ))
+    """
 
-
-
-    def fatch_data(self):
-            conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
-                                           database="mydata")
-            my_cursor = conn.cursor()
-            my_cursor.execute("Select * from hospital")
-            rows = my_cursor.fetchall()
-            if len(rows) != 0:
-                self.event_table.delete(*self.event_table.get_children())
-                for i in rows:
-                    self.event_table.insert("", END, values=i)
-
-                    conn.commit()
-                    conn.close()
-
-
-
-    def get_cursor(self,event=""):
-        cursor_row=self.event_table.focus()
-        content=self.event_table.item(cursor_row)
-        row=content["values"]
-        self.EventType.set(row[0])
-        self.EventName.set(row[1])
-        self.Amount.set(row[2])
-        self.Seats.set(row[3])
-        self.Menu.set(row[4])
-        self.Date.set(row[5])
-        self.Time.set(row[6])
-        self.UserName.set(row[7])
-        self.Email.set(row[8])
-        self.Phone.set(row[9])
-        self.Address.set(row[10])
-        self.PaymentMathod.set(row[11])
-        self.TransactionID.set(row[12])
-
-
+    """
     def iprescription(self):
         self.txtPrecription.insert(END,"NAME of Tablets:\t\t\t"+self.EventType.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.EventName.get() + "\n")
@@ -363,10 +365,7 @@ class Event:
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PaymentMathod.get() + "\n")
         self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.TransactionID.get() + "\n")
 
-
-
-
-
+        
     def delete_info(self):
         conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
                                        database="mydata")
@@ -379,7 +378,6 @@ class Event:
         conn.close()
         self.fatch_data()
         messagebox.showinfo("Delete", "User has been deleted successfully")
-
     """ 
 
 root = Tk()
