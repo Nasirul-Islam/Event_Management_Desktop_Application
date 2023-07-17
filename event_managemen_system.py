@@ -1,3 +1,16 @@
+"""
+*****************************************
+*   Author  : nasirul866               *
+*   Created : 15-07-2023   09:04:19    *
+*****************************************
+Project Name : Event Management Application.
+About Project:
+    -> It's a tiny desktop application. 
+    -> Authorities can store event data.
+    -> They can read, update, and delete event information as well.
+    -> This application built to manage different types of events.
+"""
+
 from tkinter import *
 from tkinter import ttk
 import random
@@ -10,7 +23,6 @@ import mysql.connector
 
 class Event:
     def __init__(self, root):
-        # self.SaveInformation()
         self.root = root
         self.root.title("Event Management Application")
         self.root.geometry("1360x760+0+0")
@@ -73,7 +85,6 @@ class Event:
 
         comEventType = ttk.Combobox(DataframeLeft, textvariable=self.EventType, state="readonly", font=("roboto", 12, "bold"), width=33)
         comEventType["values"] = ("Office Party", "Wedding", "Seminar", "Concert", "Birthday")
-        # comEventType.current(0)
         comEventType.grid(row=0, column=1)
         
         # Event Name
@@ -182,22 +193,20 @@ class Event:
         btnSaveInformation = Button(Buttonframe, command=self.save_info, text="Save Information", bg="green", fg="white",
                                      font=("roboto", 12, "bold"), padx=80, pady=5)
         btnSaveInformation.grid(row=0, column=0)
-
-        #  command=self.update_data,
-        btnUpdate = Button(Buttonframe, text="Update", bg="green", 
+ 
+        btnUpdate = Button(Buttonframe, command=self.update_data, text="Update", bg="green", 
                            fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
         btnUpdate.grid(row=0, column=1)
 
-        #  command=self.delete_info,
-        btnDelete = Button(Buttonframe, text="Delete", bg="green", 
+        btnDelete = Button(Buttonframe, command=self.delete_info, text="Delete", bg="green", 
                            fg="white", font=("roboto", 12, "bold"), padx=95, pady=5)
         btnDelete.grid(row=0, column=2)
 
-        btnClear = Button(Buttonframe, text="Clear", bg="green", fg="white", 
+        btnClear = Button(Buttonframe, command=self.clear_data, text="Clear", bg="green", fg="white", 
                           font=("roboto", 12, "bold"), padx=100, pady=5)
         btnClear.grid(row=0, column=3)
 
-        btnExit = Button(Buttonframe, text="Exit", bg="green", fg="white", 
+        btnExit = Button(Buttonframe, command=self.system_exit, text="Exit", bg="green", fg="white", 
                          font=("roboto", 12, "bold"), padx=120, pady=5)
         btnExit.grid(row=0, column=4)
 
@@ -285,21 +294,48 @@ class Event:
             conn.commit()
             self.fatch_data()
             conn.close()
-            messagebox.showinfo("Success", "Record Has been inserted")
+            messagebox.showinfo("Inserted", "Record Has been inserted successfully!")
+
+
+    def update_data(self):
+        conn = mysql.connector.connect(host="localhost", username="root", password="password",
+                                           database="event_management_app")
+        my_cursor = conn.cursor()
+        my_cursor.execute("update all_events set e_type=%s, e_name=%s, e_amount=%s, e_seats=%s, e_menu=%s, e_date=%s, e_time=%s, u_name=%s, u_phone=%s, u_address=%s, u_PaymentMathod=%s, u_TransactionID=%s where u_email=%s",
+                                (
+                                self.EventType.get(),
+                                self.EventName.get(),
+                                self.Amount.get(),
+                                self.Seats.get(),
+                                self.Menu.get(),
+                                self.Date.get(),
+                                self.Time.get(),
+                                self.UserName.get(),
+                                self.Phone.get(),
+                                self.Address.get(),
+                                self.PaymentMathod.get(),
+                                self.TransactionID.get(),
+                                self.Email.get()
+                                )
+                        )
+        conn.commit()
+        self.fatch_data()
+        conn.close()
+        messagebox.showinfo("Updated", "Record has been updated successfully!")
 
 
     def fatch_data(self):
-            conn = mysql.connector.connect(host="localhost", username="root", password="password",
-                                           database="event_management_app")
-            my_cursor = conn.cursor()
-            my_cursor.execute("Select * from all_events")
-            rows = my_cursor.fetchall()
-            if len(rows) != 0:
-                self.event_table.delete(*self.event_table.get_children())
-                for i in rows:
-                    self.event_table.insert("", END, values=i)
-                conn.commit()
-            conn.close()
+        conn = mysql.connector.connect(host="localhost", username="root", password="password",
+                                       database="event_management_app")
+        my_cursor = conn.cursor()
+        my_cursor.execute("Select * from all_events")
+        rows = my_cursor.fetchall()
+        if len(rows) != 0:
+            self.event_table.delete(*self.event_table.get_children())
+            for i in rows:
+                self.event_table.insert("", END, values=i)
+            conn.commit()
+        conn.close()
 
 
     def get_cursor(self, event=""):
@@ -321,65 +357,44 @@ class Event:
         self.TransactionID.set(row[12])
 
 
-
-    """
-    def update_data(self):
-            conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
-                                           database="mydata")
-            my_cursor=conn.cursor()
-            my_cursor.execute("update hospital set EventType=s%,Amount=s%,nooftablets=s%,Menu=%s,"
-                              "Date=s%,Time=%s,UserName=%s,storage=%s,Phone=%s,pname=%s,dob=%s,address=%s where EventName=s%",(
-                self.EventType.get(),
-                self.Amount.get(),
-                self.Seats.get(),
-                self.Menu.get(),
-                self.Date.get(),
-                self.Time.get(),
-                self.UserName.get(),
-                self.Email.get(),
-                self.Phone.get(),
-                self.Address.get(),
-                self.PaymentMathod.get(),
-                self.TransactionID.get(),
-                self.EventName.get()
-            ))
-    """
-
-    """
-    def iprescription(self):
-        self.txtPrecription.insert(END,"NAME of Tablets:\t\t\t"+self.EventType.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.EventName.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Amount.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Seats.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Menu.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Date.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Time.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.UserName.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.sideEffect.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.FurtherInformation.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Email.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.DrivingUsingMachine.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PatentId.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Phone.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.Address.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.PaymentMathod.get() + "\n")
-        self.txtPrecription.insert(END, "NAME of Tablets:\t\t\t" + self.TransactionID.get() + "\n")
-
-        
     def delete_info(self):
-        conn = mysql.connector.connect(host="localhost", username="root", password="Sabid32543167",
-                                       database="mydata")
-        my_cursor=conn.cursor()
-        query="delete from hospital where EventName=s%"
-        value=(self.EventName.get(),)
+        conn = mysql.connector.connect(host="localhost", username="root", password="password",
+                                       database="event_management_app")
+        my_cursor = conn.cursor()
+        query = "delete from all_events where u_email=%s"
+        value = (self.Email.get(),)
         my_cursor.execute(query,value)
 
         conn.commit()
         conn.close()
         self.fatch_data()
-        messagebox.showinfo("Delete", "User has been deleted successfully")
-    """ 
+        messagebox.showinfo("Deleted", "Record has been deleted successfully!")
+
+
+    def clear_data(self):
+        self.EventType.set("")
+        self.EventName.set("")
+        self.Amount.set("")
+        self.Seats.set("")
+        self.Menu.set("")
+        self.Date.set("")
+        self.Time.set("")
+        self.UserName.set("")
+        self.Email.set("")
+        self.Phone.set("")
+        self.Address.set("")
+        self.PaymentMathod.set("")
+        self.TransactionID.set("")
+
+
+    def system_exit(self):
+        system_exit = messagebox.askyesno("Event Management Application", "Confirm \n You want to exit.")
+        if system_exit>0:
+            root.destroy()
+            return
+
 
 root = Tk()
 ob = Event(root)
 root.mainloop()
+
