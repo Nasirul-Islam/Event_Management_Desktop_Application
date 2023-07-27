@@ -1,5 +1,6 @@
 USE event_management_app;
 
+
 CREATE TABLE all_events(
     e_type VARCHAR(50),
     e_name VARCHAR(50),
